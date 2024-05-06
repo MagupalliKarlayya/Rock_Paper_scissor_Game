@@ -58,14 +58,21 @@
     <p class="computerpic"></p>
     <p class="score"></p>
     <button onclick="
-    score.wincount=0,score.tiecount=0,score.loosecount=0;
-    updateScoreElements();
+        resetscore();
     " id="button2">Reset Score</button>
     <button onclick="
    AutoPlay();
     " id="button2" class="autoplay">Auto Play</button>
     <script >
-        const score = JSON.parse(localStorage.getItem('score'))
+        let score = {
+             wincount:0,
+            tiecount:0,
+            loosecount:0
+        };
+            const scoresever=JSON.parse(localStorage.getItem('score'))
+        if(scoresever){
+     score=scoresever;
+        }
         updateScoreElements();
       
             function pickcomputermove(){
@@ -159,6 +166,15 @@
                         updateScoreElements();
                         document.querySelector('.game_result').innerHTML=`You ${result}.`;
                         document.querySelector('.computerpic').innerHTML=`YOU PICKED:-  ${playerplay}    ${democomputer} -:COMPUTER PICKED`;
+        }
+        function resetscore(){
+            score={
+                wincount:0,
+                loosecount:0,
+                tiecount:0
+            }
+            updateScoreElements();
+            localStorage.removeItem('score');
         }
             function updateScoreElements(){
             document.querySelector('.score').innerHTML=`WIN: ${score.wincount}, LOOSE: ${score.loosecount}, TIE: ${score.tiecount}`;
